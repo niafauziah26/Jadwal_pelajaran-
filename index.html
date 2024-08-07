@@ -12,8 +12,66 @@
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
+  <table class="table" id="jadwal-pelajaran">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Hari</th>
+        <th scope="col">Jam</th>
+        <th scope="col">waktu</th>
+        <th scope="col">Kelas</th>
+        <th scope="col">Mapel</th>
+        <th scope="col">Nama guru</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  
+  <img src="loader.gif" style="width: 1,8em; display: block" id="loader">
+  <a href="form-data-mapel.html">Tambah Jadwal Mapel</a>
+  
+   <script type="module">
+    import { ambiljadwalpelajarn, formatAngka, hapusjadwalpelajaran } from './main.js'
+$(document).ready(async function() {
+      let elemenDaftar = $("#jadwal-pelajarn > tbody");
+      let daftarJadwalpelajaran = await ambilDaftarJadwalpelajaran();
+      let nomor = 1;
 
-<body>
-  <script src="config.js"></script>
+      jadwalpelajarn.forEach((data) => {
+        elemenDaftar.append(
+          '<tr>' +
+          '<th>' + nomor + '</th>' +
+          '<td>' + data.hari + '</td>' +
+          '<td>' + data.jam + '</td>' +
+          '<td>' + data.waktu + '</td>' +
+          '<td>' + data.kelas + '</td>' +
+          '<td>' + data.mapel + '</td>' +
+          '<td>' + data.nama guru + '</td>' +
+          '<td>' + '<button class="btn btn-danger tombol-hapus" data>' + '<td class="stack-up">' +
+          ' <a href="#" class="btn btn-warning link-ubah"  data="' +
+          data.id +
+          '">ubah</a> ' +
+          ' <button class="btn btn-danger tombol-hapus" data="' +
+          data.id +
+          '">Hapus</button>' + '</td>' +
+          '</tr>'
+        );
+        nomor = nomor + 1;
+      });
+      $('.tombol-hapus').click(async function() {
+        await hapusjadwalpelajaran($(this).attr('data'));
+        location.reload();
+      })
+      $('.link-ubah').click(async function() {
+        window.location.replace('ubah-mapel.html?docId=' + $(this).attr('data'));
+      })
+
+      $('#loader').hide();
+
+    });
+
+
+</script>
 </body>
 </html>
